@@ -1,0 +1,59 @@
+/* Reset some default styles */
+body, html, #root, .App {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Header styling */
+.App-header {
+  background-color: #282c34;
+  color: #fff;
+  padding: 1rem 0;
+}
+
+.App-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+/* Main content styling */
+.App-main {
+  padding: 2rem;
+  min-height: calc(100% - 160px); /* Adjust based on header/footer size */
+  background: #f5f5f5;
+}
+
+/* Footer styling */
+.App-footer {
+  background-color: #282c34;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
