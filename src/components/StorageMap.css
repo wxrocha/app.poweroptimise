@@ -1,0 +1,43 @@
+.map-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.status-legend {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
+  z-index: 999;
+}
+
+.status-legend h4 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.status-legend ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.status-legend li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  margin-right: 8px;
+  border: 1px solid #ccc;
+}

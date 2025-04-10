@@ -1,0 +1,35 @@
+.dashboard-container {
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+
+}
+
+.dashboard-panel {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-height: 500px;         
+  height: auto;              
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive tweak: stack vertically on small screens */
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .dashboard-panel {
+    height: auto;
+  }
+}
