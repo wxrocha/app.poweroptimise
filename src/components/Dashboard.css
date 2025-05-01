@@ -22,6 +22,27 @@
   flex-direction: column;
 }
 
+/* Add section styling for clear layout */
+.dashboard-section {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+  background-color: #fdfdfd;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-section h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+.dashboard-map {
+  margin-top: 1rem;
+}
+
 /* Responsive tweak: stack vertically on small screens */
 @media (max-width: 900px) {
   .dashboard-grid {

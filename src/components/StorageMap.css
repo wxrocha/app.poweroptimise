@@ -1,9 +1,55 @@
 .map-wrapper {
-  position: relative;
-  height: 100%;
+  position: relative;         /* Enables absolute positioning inside */
+  height: 500px;
   width: 100%;
+  margin-top: 1rem;
+  overflow: hidden;           /* Prevents legends from spilling out */
 }
 
+.fuel-legend {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: white;
+  padding: 10px 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  font-size: 13px;
+  z-index: 1000;
+  max-width: 200px; /* ✅ prevents stretching */
+  max-height: 250px; /* ✅ limit vertical height */
+  overflow-y: auto;  /* ✅ scroll if needed */
+  white-space: nowrap;
+}
+
+.fuel-legend h4 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.fuel-legend ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fuel-legend li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  margin-right: 8px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+/* ✅ Status legend (top-right) */
 .status-legend {
   position: absolute;
   top: 10px;
@@ -32,12 +78,4 @@
   display: flex;
   align-items: center;
   margin-bottom: 4px;
-}
-
-.legend-color {
-  width: 12px;
-  height: 12px;
-  display: inline-block;
-  margin-right: 8px;
-  border: 1px solid #ccc;
 }

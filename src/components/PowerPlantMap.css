@@ -1,7 +1,8 @@
 .map-wrapper {
-  position: relative;
-  height: 100%;
+  height: 500px; /* ✅ explicitly set height */
   width: 100%;
+  position: relative;
+  margin-top: 1rem;
 }
 
 .fuel-legend {

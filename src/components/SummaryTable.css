@@ -1,0 +1,30 @@
+.summary-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.25rem;
+}
+
+.summary-label {
+  font-weight: 500;
+  color: #333;
+}
+
+.summary-value {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.summary-unit {
+  color: #666;
+  font-size: 0.85em;
+  margin-left: 0.25rem;
+}
