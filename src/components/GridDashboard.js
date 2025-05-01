@@ -30,6 +30,7 @@ const API = {
 };
 
 // Additional helper to get last snapshot in a time series
+// Additional
 
 const getLastSnapshot = (series) => series?.[series.length - 1];
 
