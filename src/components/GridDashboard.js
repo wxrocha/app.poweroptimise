@@ -34,14 +34,6 @@ const API = {
 
 const getLastSnapshot = (series) => series?.[series.length - 1];
 
-const COLOURS = [
-  "#2b8cbe",
-  "#fd8d3c",
-  "#31a354",
-  "#756bb1",
-  "#d95f0e",
-  "#636363",
-];
 
 const SOURCE_COLOURS = {
   Coal: "#636363",            // dark grey
@@ -92,15 +84,7 @@ const useFetch = (endpoint) => {
 // CONTRIBUTION TABLES
 // ────────────────────────────────────────────────────────────────────────────
 // ── Mappings originate from the Python side; duplicated here for the UI only
-const GEN_COMPONENTS = {
-  component_coal: ["coal"],
-  component_gas: ["ccgt", "ocgt"],
-  component_solar: ["solar"],
-  component_wind: ["embedded_wind", "wind"],
-  component_hydroelectric: ["hydro"],
-  component_nuclear: ["nuclear"],
-  component_biomass: ["biomass"],
-};
+
 
 const INT_COMPONENTS = {
   component_belgium: ["nemo"],
@@ -111,21 +95,6 @@ const INT_COMPONENTS = {
   component_norway: ["nsl"],
 };
 
-const UMBRELLA_COMPONENTS = {
-  Fossils: ["coal", "ocgt", "ccgt"],
-  Renewables: ["solar", "embedded_wind", "wind", "hydro"],
-  Others: ["nuclear", "biomass"],
-  Storage: ["pumped"],
-};
-
-// Build final groups table once so UI stays DRY
-const GROUPS = {
-  Fossils: { fields: ["coal", "ocgt", "ccgt"] },
-  Renewables: { fields: ["solar", "embedded_wind", "wind", "hydro"] },
-  Others: { fields: ["nuclear", "biomass"] },
-  Storage: { fields: ["pumped"] },
-  Interconnectors: { fields: Object.values(INT_COMPONENTS).flat() },
-};
 
 const SOURCES = {
   // Generation fields
@@ -153,7 +122,6 @@ const SOURCES = {
   nsl: "Norway",
 };
 
-const roundPct = (v) => (v === null || v === undefined ? "–" : `${(v * 100).toFixed(1)}%`);
 
 const ContributionTable = ({ snapshot }) => {
   if (!snapshot) return null;
