@@ -86,16 +86,6 @@ const useFetch = (endpoint) => {
 // ── Mappings originate from the Python side; duplicated here for the UI only
 
 
-const INT_COMPONENTS = {
-  component_belgium: ["nemo"],
-  component_denmark: ["viking"],
-  component_france: ["ifa", "ifa2", "eleclink"],
-  component_ireland: ["moyle", "ewic", "greenlink"],
-  component_netherlands: ["britned"],
-  component_norway: ["nsl"],
-};
-
-
 const SOURCES = {
   // Generation fields
   coal: "Coal",
@@ -120,80 +110,6 @@ const SOURCES = {
   greenlink: "Ireland",
   britned: "Netherlands",
   nsl: "Norway",
-};
-
-
-const ContributionTable = ({ snapshot }) => {
-  if (!snapshot) return null;
-  const total = snapshot.total_generation ?? 0;
-
-  const sourceSums = {};
-
-  // Step 1: Sum values into source names
-  Object.keys(SOURCES).forEach((field) => {
-    const sourceName = SOURCES[field];
-    const fieldValue = snapshot[field] ?? 0;
-    sourceSums[sourceName] = (sourceSums[sourceName] || 0) + fieldValue;
-  });
-
-  // Step 2: Group sources by categories (big ones: Fossils, Renewables, Others, Storage, Interconnectors)
-  const GROUP_CATEGORIES = {
-    Fossils: ["Coal", "Gas"],
-    Renewables: ["Solar", "Wind", "Hydroelectric"],
-    Others: ["Nuclear", "Biomass"],
- 
-    Interconnectors: ["Belgium", "Denmark", "France", "Ireland", "Netherlands", "Norway"],
-  };
-
-  const rows = [];
-
-  Object.entries(GROUP_CATEGORIES).forEach(([groupLabel, sourcesInGroup]) => {
-    const groupSum = sourcesInGroup.reduce((sum, src) => sum + (sourceSums[src] ?? 0), 0);
-
-    const subRows = sourcesInGroup.map((src) => ({
-      name: src,
-      val: sourceSums[src] ?? 0,
-    }));
-
-    rows.push({
-      label: groupLabel,
-      value: groupSum,
-      pct: total ? groupSum / total : null,
-      sub: subRows,
-    });
-  });
-
-  return (
-    <Table className="text-xs">
-      <Thead>
-        <Tr>
-          <Th>Category</Th>
-          <Th className="text-right">GW</Th>
-          <Th className="text-right">%</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {rows.map((r) => (
-          <>
-            <Tr key={r.label} className="font-medium bg-gray-50">
-              <Td>{r.label}</Td>
-              <Td className="text-right">{r.value.toFixed(2)}</Td>
-              <Td className="text-right">{r.pct !== null ? (r.pct * 100).toFixed(1) + "%" : "–"}</Td>
-            </Tr>
-            {r.sub.map((s) => (
-              <Tr key={r.label + s.name}>
-                <Td className="pl-4">{s.name}</Td>
-                <Td className="text-right">{s.val.toFixed(2)}</Td>
-                <Td className="text-right">
-                  {total ? ((s.val / total) * 100).toFixed(1) + "%" : "–"}
-                </Td>
-              </Tr>
-            ))}
-          </>
-        ))}
-      </Tbody>
-    </Table>
-  );
 };
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -350,7 +266,7 @@ const TrendChart = ({ series, metric, title, compactTicks = false }) => {
 // ────────────────────────────────────────────────────────────────────────────
 export default function GridDashboard() {
   const { data: live, loading: loadingLive } = useFetch(API.live);
-  const { data: halfHourSeries, loading: loadingHalfHour } = useFetch(API.halfhour);
+  const { data: halfHourSeries } = useFetch(API.halfhour);
   const { data: daySeries, loading: loadingDay } = useFetch(API.day);
   const { data: weekSeries, loading: loadingWeek } = useFetch(API.week);
 
