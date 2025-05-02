@@ -17,7 +17,7 @@ import {
   CartesianGrid,
   Tooltip as AreaTooltip,
 } from "recharts";
-import { Table, Tbody, Td, Th, Thead, Tr } from "../components/ui/table";
+
 
 // ────────────────────────────────────────────────────────────────────────────
 // CONFIG
@@ -27,6 +27,14 @@ const API = {
   halfhour: "https://poweroptimiseai-0390a8a27103.herokuapp.com/grid-api/grid_halfhours/",
   day: "https://poweroptimiseai-0390a8a27103.herokuapp.com/grid-api/grid_day/",
   week: "https://poweroptimiseai-0390a8a27103.herokuapp.com/grid-api/grid_week/",
+};
+
+const formatDatetime = (isoString) => {
+  const date = new Date(isoString);
+  return date.toLocaleString("en-GB", {
+    dateStyle: "short",
+    timeStyle: "short",
+  });
 };
 
 // Additional helper to get last snapshot in a time series
@@ -315,6 +323,12 @@ const mapSnapshotToSourceTotals = (snapshot) => {
 
           {/* LIVE TAB */}
 	  <Tabs.Content value="live">
+
+  	    {live?.time && (
+            <p className="text-sm text-gray-600 mb-2">
+            Last Updated: {formatDatetime(live.time)}
+            </p>
+            )}
   	     {loadingLive ? (
                 <p>Loading live data…</p>
              ) : (
