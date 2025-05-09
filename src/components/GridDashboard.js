@@ -326,7 +326,7 @@ const mapSnapshotToSourceTotals = (snapshot) => {
 
   	    {live?.time && (
             <p className="text-sm text-gray-600 mb-2">
-            Last Updated: {formatDatetime(live.time)}
+            Last Updated: {formatDatetime(live.time)} <span className="font-semibold">(UTC)</span>
             </p>
             )}
   	     {loadingLive ? (
