@@ -23,14 +23,6 @@ const fuelColours = {
 
 /* ─────────────────────────  SVG-pin factory  ───────────────────────── */
 
-const svgPin = (hex) => encodeURIComponent(`
-  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="48">
-    <!-- pin body -->
-    <path d="M16 0C8 0 2 6 2 14c0 11 14 32 14 32s14-21 14-32C30 6 24 0 16 0z"
-          fill="#${hex}" stroke="#333" stroke-width="1"/>
-    <!-- small highlight -->
-    <circle cx="12" cy="8" r="3" fill="white" fill-opacity="0.7"/>
-  </svg>`);
 
 /* Square DivIcon factory – size 12 × 12 px */
 const squareIcon = (hex) =>
