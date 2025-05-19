@@ -1,65 +1,102 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-cluster';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import './PowerPlantMap.css'; // 👈 for styling legend
+import React, { useEffect, useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-cluster";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import "./PowerPlantMap.css";
 
-// Fuel color map
-const fuelColors = {
-  Coal: 'black',
-  Gas: 'orange',
-  Oil: 'brown',
-  Hydro: 'blue',
-  Nuclear: 'purple',
-  Solar: 'gold',
-  Wind: 'green',
-  Biomass: 'darkgreen',
-  'Wave and Tidal': 'yellow',
-  Storage: 'gray',
-  Waste: 'red',
-  Cogeneration: 'pink',
+/* Hex colours (6 chars, no “#”) */
+const fuelColours = {
+  Coal:            "000000",
+  Gas:             "ff8c00",
+  Oil:             "8b4513",
+  Hydro:           "0000ff",
+  Nuclear:         "800080",
+  Solar:           "ffd700",
+  Wind:            "008000",
+  Biomass:         "006400",
+  "Wave and Tidal":"ffff00",
+  Storage:         "808080",
+  Waste:           "ff0000",
+  Cogeneration:    "ffc0cb",
 };
 
-// Colored marker icon factory
-const createColoredIcon = (color) => {
-  return new L.Icon({
-    iconUrl: `https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|${color}`,
-    iconSize: [21, 34],
-    iconAnchor: [10, 34],
-    popupAnchor: [0, -28],
+/* ─────────────────────────  SVG-pin factory  ───────────────────────── */
+
+const svgPin = (hex) => encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="48">
+    <!-- pin body -->
+    <path d="M16 0C8 0 2 6 2 14c0 11 14 32 14 32s14-21 14-32C30 6 24 0 16 0z"
+          fill="#${hex}" stroke="#333" stroke-width="1"/>
+    <!-- small highlight -->
+    <circle cx="12" cy="8" r="3" fill="white" fill-opacity="0.7"/>
+  </svg>`);
+
+/* Square DivIcon factory – size 12 × 12 px */
+const squareIcon = (hex) =>
+  L.divIcon({
+    className: "",                       // no default class
+    html: `<div style="
+              width:12px;height:12px;
+              background:#${hex};
+              border:1px solid #fff;
+              box-shadow:0 0 2px rgba(0,0,0,.5);
+            "></div>`,
+    iconSize:   [14, 14],  // reserva­tion rectangle
+    iconAnchor: [7 , 7 ],  // centre of square sits on lat-lng
+    popupAnchor:[0 ,-8 ],  // popup stems from just above
   });
-};
 
-const PowerPlantMap = () => {
+/* ─────────────────────────  Component  ───────────────────────── */
+
+export default function PowerPlantMap() {
   const [plants, setPlants] = useState([]);
 
   useEffect(() => {
-    fetch('https://poweroptimiseai-0390a8a27103.herokuapp.com/api/power-plants/')
-      .then(res => res.json())
-      .then(data => setPlants(data));
+    fetch(
+      "https://poweroptimiseai-0390a8a27103.herokuapp.com/api/power-plants/"
+    )
+      .then((r) => r.json())
+      .then(setPlants)
+      .catch(console.error);
   }, []);
 
   return (
     <div className="map-wrapper">
-      <MapContainer center={[54.5, -3]} zoom={6} style={{ height: "100%", width: "100%" }}>
+      <MapContainer
+        center={[54.5, -3]}
+        zoom={6}
+        style={{ height: "100%", width: "100%" }}
+      >
         <TileLayer
-          attribution='&copy; OpenStreetMap contributors'
+          attribution="&copy; OpenStreetMap contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+
         <MarkerClusterGroup>
           {plants
-            .filter(p => p.latitude && p.longitude && p.latitude !== 0 && p.longitude !== 0)
-            .map((plant, idx) => {
-              const color = fuelColors[plant.primary_fuel] || 'gray';
-              const icon = createColoredIcon(color);
-
+            .filter(
+              (p) =>
+                p.latitude &&
+                p.longitude &&
+                Number(p.latitude) !== 0 &&
+                Number(p.longitude) !== 0
+            )
+            .map((p, i) => {
+              const hex  = fuelColours[p.primary_fuel] || "808080";
+              const icon = squareIcon(hex);
               return (
-                <Marker key={idx} position={[plant.latitude, plant.longitude]} icon={icon}>
+                <Marker
+                  key={i}
+                  position={[p.latitude, p.longitude]}
+                  icon={icon}
+                >
                   <Popup>
-                    <strong>{plant.name}</strong><br />
-                    Fuel: {plant.primary_fuel}<br />
-                    Capacity: {plant.capacity_mw} MW
+                    <strong>{p.name}</strong>
+                    <br />
+                    Fuel: {p.primary_fuel}
+                    <br />
+                    Capacity: {p.capacity_mw} MW
                   </Popup>
                 </Marker>
               );
@@ -67,13 +104,16 @@ const PowerPlantMap = () => {
         </MarkerClusterGroup>
       </MapContainer>
 
-      {/* Fuel type legend */}
+      {/* Legend */}
       <div className="fuel-legend">
         <h4>Fuel Type Legend</h4>
         <ul>
-          {Object.entries(fuelColors).map(([fuel, color]) => (
+          {Object.entries(fuelColours).map(([fuel, hex]) => (
             <li key={fuel}>
-              <span className="legend-color" style={{ backgroundColor: color }}></span>
+              <span
+                className="legend-color"
+                style={{ backgroundColor: `#${hex}` }}
+              />
               {fuel}
             </li>
           ))}
@@ -81,6 +121,4 @@ const PowerPlantMap = () => {
       </div>
     </div>
   );
-};
-
-export default PowerPlantMap;
+}
