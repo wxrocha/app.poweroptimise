@@ -6,7 +6,6 @@ import StorageMap from "./StorageMap";
 import RollingFeed from "./RollingFeed";
 import Plot from "react-plotly.js";
 import "./Dashboard.css";
-import SolarProductionExplorer from "./SolarProductionExplorer";
 
 const API_URL =
   "https://poweroptimiseai-0390a8a27103.herokuapp.com/grid-api/grid_analysis_api/";
@@ -92,16 +91,9 @@ export default function Dashboard() {
         </div>
       </section>
 
-    {/* NEW Section 4  ––––––––––––––––––––––––––––––– */}
-    <section className="dashboard-section">
-      <h2>Section 4: Production/Risk - Explorer (Solar Plants)</h2>
-      <SolarProductionExplorer />
-    </section>
-
-
-      {/* ── Section 5 ─────────────────────────────── */}
+      {/* ── Section 4 ─────────────────────────────── */}
       <section className="dashboard-section">
-        <h2>Section 5: Live Energy &amp; Climate Wire</h2>
+        <h2>Section 4: Live Energy &amp; Climate Wire</h2>
         <RollingFeed apiBase="https://poweroptimiseai-0390a8a27103.herokuapp.com" />
       </section>
     </div>

@@ -1,0 +1,27 @@
+.risk-explorer { margin-top: 3rem; }
+
+.toolbar {
+  display: flex; gap: 0.5rem; align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.toolbar input { flex: 1; padding: 4px 6px; }
+
+select {
+  width: 100%; max-width: 380px; height: 220px;
+  margin-bottom: 1rem;
+}
+
+.risk-output { margin-top: 1rem; }
+
+.risk-table {
+  width: 100%; border-collapse: collapse; margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.risk-table th, .risk-table td {
+  border: 1px solid #ddd; padding: 4px 6px; text-align: right;
+}
+
+.risk-table th { background: #f0f0f0; text-align: center; }
+.risk-table td:first-child, .risk-table th:first-child { text-align: left; }
